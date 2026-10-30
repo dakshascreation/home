@@ -5,8 +5,8 @@ This repository now contains a Next.js storefront and a Supabase-backed account,
 ## 1. Create and configure Supabase
 1. Create a project at https://supabase.com/.
 2. In the Supabase SQL Editor, run all of `supabase/schema.sql`.
-3. In Authentication settings, enable Phone sign-in and configure an SMS provider. Set India (+91) as an allowed country if you want to restrict phone numbers.
-4. Configure SMS rate limits and abuse protections. Supabase phone OTP requires a supported SMS provider and may incur charges.
+3. In Authentication settings, enable Anonymous Sign-Ins. The storefront does not use SMS phone OTP; customers enter their name and phone number without receiving a verification code.
+4. Add appropriate abuse protection and rate limits. Because anonymous sessions are used, test customer records and order creation carefully before launch.
 5. In Project Settings → API, copy the Project URL and publishable/anon key.
 
 ## 2. Local run
@@ -18,7 +18,7 @@ This repository now contains a Next.js storefront and a Supabase-backed account,
 Do not put a Supabase service-role key in browser code or commit secrets to GitHub.
 
 ## 3. Make your account an admin
-1. Open the app and sign in with your verified phone number.
+1. Open the app and enter your customer details to create an anonymous session.
 2. In Supabase → Authentication → Users, copy your user UUID.
 3. In SQL Editor, run:
    `insert into public.admin_users(user_id) values ('PASTE-USER-UUID-HERE');`
@@ -38,7 +38,7 @@ Do not put a Supabase service-role key in browser code or commit secrets to GitH
 ## Features
 - Editorial white-and-gold responsive design and animated jewellery artwork
 - Product browsing, search, categories, sorting, and cart
-- Supabase phone OTP sign-in
+- Customer name and phone collection without SMS OTP
 - Optional email confirmation through Supabase Auth
 - Customer profile/address persistence
 - Secure row-level policies for customer data
@@ -46,4 +46,4 @@ Do not put a Supabase service-role key in browser code or commit secrets to GitH
 - Server-side atomic order creation with stock validation
 
 ## Before accepting real orders
-Configure SMS delivery, test phone OTP with Indian numbers, configure Supabase auth and rate limits, add your own verified admin UUID, upload real catalogue photos and the correct QR, test end-to-end orders, and publish privacy/terms/refund/delivery policies. This repository does not itself configure your external accounts or deploy the app.
+Enable Supabase anonymous sign-ins, configure abuse protections and rate limits, add your admin UUID, upload real catalogue photos and the correct payment QR, test end-to-end orders, and publish privacy/terms/refund/delivery policies. Phone numbers are collected as customer-provided details and are not verified by SMS. This repository does not itself configure your external accounts or deploy the app.
