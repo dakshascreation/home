@@ -30,7 +30,7 @@ create table if not exists public.products (
 create table if not exists public.orders (
   id uuid primary key default gen_random_uuid(),
   order_number text unique not null default ('DC-' || upper(substr(encode(gen_random_bytes(6),'hex'),1,10))),
-  user_id uuid not null references auth.users(id),
+  user_id uuid not null references public.profiles(id),
   status text not null default 'pending' check (status in ('pending','payment_confirmed','processing','shipped','completed','cancelled')),
   total integer not null default 0 check (total >= 0),
   delivery_address text not null,
